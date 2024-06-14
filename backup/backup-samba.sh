@@ -24,6 +24,7 @@ LOG_FILE="/tmp/backup.log"
 [[ -z "${BACKUP_NAME}" ]] && echo "Invalid Configuration" && exit 1
 [[ -z "${LOG_FILE}" ]] && echo "Invalid Configuration" && exit 1
 
+# shellcheck disable=SC2317
 function sendDiscord() {
     [[ -z "${1}" ]] && return || MSG="${1}"
     curl -s -X POST \
@@ -32,6 +33,7 @@ function sendDiscord() {
         "${DISCORD_WEBHOOK}"
 }
 
+# shellcheck disable=SC2317
 function work_dir_trap() {
     _ST="$?"
     if [[ "${_ST}" != "0" ]]; then
@@ -41,8 +43,8 @@ function work_dir_trap() {
         echo rm -rf "${WORK_DIR}"
         rm -rf "${WORK_DIR}"
     fi
-    sudo umount "${MOUNT_DIR}" > /dev/null || :
-    rmdir "${MOUNT_DIR}" > /dev/null || :
+    sudo umount "${MOUNT_DIR}" >/dev/null || :
+    rmdir "${MOUNT_DIR}" >/dev/null || :
     exit "${_ST}"
 }
 
@@ -66,6 +68,7 @@ for dir in "${EXCLUDE_DIRS[@]}"; do
     exclude_string="${exclude_string} --exclude ${dir}"
 done
 
+# shellcheck disable=SC2086
 tar ${exclude_string} -czf "${WORK_DIR}/${BACKUP_NAME}" -C "${BACKUP_DIR}" .
 cp "${WORK_DIR}/${BACKUP_NAME}" "${MOUNT_DIR}"
 stat "${MOUNT_DIR}/${BACKUP_NAME}"
