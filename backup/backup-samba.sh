@@ -76,10 +76,12 @@ echo "${SCRIPT}: Backup Success!"
 if [ -n "${SAMBA_MAX}" ]; then
     echo "Cleaning Up Backups, keeping ${SAMBA_MAX}"
     ((SAMBA_MAX++))
+    cd "${MOUNT_DIR}"
     find . -maxdepth 1 -type f -printf '%T+ %p\n' | sort -r | tail -n +"${SAMBA_MAX}" | cut -d' ' -f2 | while read -r file; do
         echo "Removing Old Backup: ${file}"
         rm -f "${file}"
     done
+    ls -lAh "${MOUNT_DIR}"
 fi
 
 # sendDiscord ":white_check_mark: \`${SCRIPT}\`: Backup of \`${BACKUP_DIR}\` on **${HOSTNAME}** is Successful."
