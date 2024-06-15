@@ -19,6 +19,7 @@ LOG_FILE="/tmp/backup.log"
 [[ -z "${BACKUP_DIR}" ]] && echo "Invalid Configuration" && exit 1
 [[ -z "${LOG_FILE}" ]] && echo "Invalid Configuration" && exit 1
 
+# shellcheck disable=SC2317
 function sendDiscord() {
     [[ -z "${1}" ]] && return || MSG="${1}"
     curl -s -X POST \
@@ -27,6 +28,7 @@ function sendDiscord() {
         "${DISCORD_WEBHOOK}"
 }
 
+# shellcheck disable=SC2317
 function work_dir_trap() {
     _ST="$?"
     if [[ "${_ST}" != "0" ]]; then
@@ -65,6 +67,6 @@ influx backup "${WORK_DIR}"
 tar -czf "${BACKUP_DIR}/${BACKUP_NAME}" -C "${WORK_DIR}" .
 
 echo "${SCRIPT}: Backup Success!"
-# sendDiscord ":white_check_mark: \`${SCRIPT}\`: Backup of \`${BACKUP_DIR}\` on **${HOSTNAME}** is Successful."
+# sendDiscord ":white_check_mark: \`${SCRIPT}\`: Backup of \`influxdb\` on **${HOSTNAME}** is Successful."
 set +e
 exit 0
