@@ -43,8 +43,8 @@ function work_dir_trap() {
         echo rm -rf "${WORK_DIR}"
         rm -rf "${WORK_DIR}"
     fi
-    sudo umount "${MOUNT_DIR}" >/dev/null || :
-    rmdir "${MOUNT_DIR}" >/dev/null || :
+    sudo umount "${MOUNT_DIR}" || echo "umount FAILED"
+    rmdir "${MOUNT_DIR}" || echo "rmdir FAILED"
     exit "${_ST}"
 }
 
@@ -85,6 +85,7 @@ if [ -n "${SAMBA_MAX}" ]; then
         rm -f "${file}"
     done
     ls -lAh "${MOUNT_DIR}"
+    cd /tmp
 fi
 
 # sendDiscord ":white_check_mark: \`${SCRIPT}\`: Backup of \`${BACKUP_DIR}\` on **${HOSTNAME}** is Successful."
