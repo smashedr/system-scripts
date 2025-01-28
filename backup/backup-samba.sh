@@ -10,7 +10,7 @@ SAMBA_PATH="Samba/${HOSTNAME//.*/}"
 SAMBA_MAX="10"
 
 BACKUP_DIR="/home/shane"
-EXCLUDE_DIRS=(".cache" "esphome/.esphome" "idea" ".local" "motion" "miniconda3" "venv" ".docker" "influxdb/data" "tmp" "temp" "ha/.storage")
+EXCLUDE_DIRS=(".cache" ".docker" ".npm" ".trash" ".local" ".cargo" "esphome" "forgejo-runner/.cache" "git" "idea" "piper" "radarr/logs" "radarr/MediaCover" "sonarr/logs" "sonarr/MediaCover" "temp" "tmp" "videos" "wakeword")
 BACKUP_NAME="${HOSTNAME//.*/}-$(date "+%y.%m.%d.%H%M.%S").tar.gz"
 MOUNT_DIR="/tmp/${SAMBA_HOST}"
 LOG_FILE="/tmp/backup.log"
