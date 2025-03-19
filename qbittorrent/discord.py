@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# C:\Apps\Python311\python.EXE C:\Users\Shane\IdeaProjects\system-scripts\qbittorrent\discord.py "%N" "%Z" "%L" "%C" "discord-webhook"
+# C:\Apps\Python311\python.EXE C:\Users\Shane\IdeaProjects\system-scripts\qbittorrent\discord.py "%N" "%L" "%Z" "%C" "discord-webhook"
 
 import json
 import requests
@@ -27,12 +27,12 @@ def fmt_bytes(num, suffix="B"):
 
 
 name = sys.argv[1]
-size = fmt_bytes(sys.argv[2])
-cat = sys.argv[3]
-files = sys.argv[4]
+cat = sys.argv[2]
+size = fmt_bytes(sys.argv[3]) if sys.argv[3] != "-1" else ""
+files = f"({sys.argv[4]})" if sys.argv[4] != "-1" else ""
 hook = sys.argv[5]
 
-output = f":file_folder: `{cat or 'unknown'}` ({files}) **{name}** {size}"
+output = f":file_folder: `{cat or 'unknown'}` **{name}** {files} {size}"
 print(f"output: {output}")
 r = send_discord(output, hook)
 if not r.ok:
