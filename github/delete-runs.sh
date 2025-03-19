@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Delete all runs for a given workflow
-# Usage: delete-logs.sh <repository> <workflow-name>
+# Usage: delete-runs.sh <repository> <workflow-name>
 
 set -oe pipefail
 
@@ -25,11 +25,12 @@ _IDS=$(gh -R "${REPOSITORY}" run list -w "${WORKFLOW}" --json databaseId --jq '.
 
 echo "Found $(echo "${_IDS}" | wc -l) runs for: ${WORKFLOW}"
 
-until [[ $VAR =~ y|n ]];do
-    read -r -p "Proceed? (y/n) " -n 1 VAR
+until [[ ${VAR} =~ y|n ]];do
+    read -r -p "Proceed? (y/n) " VAR
     VAR=$(echo "${VAR}" | tr '[:upper:]' '[:lower:]')
     echo
 done
+[[ ${VAR} != "y" ]] && exit 1
 
 for _id in ${_IDS}; do
   echo "Deleting run ID: ${_id}"

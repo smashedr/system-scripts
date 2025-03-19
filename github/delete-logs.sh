@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Delete all logs for a given workflow
+# Delete all logs for a given repository and workflow
 # Usage: delete-logs.sh <repository> <workflow-name>
 
 set -oe pipefail
@@ -32,11 +32,12 @@ RUNS=$(
 
 echo "Delete $(echo "${RUNS}" | wc -l) completed runs for workflow ${WORKFLOW_NAME}"
 
-until [[ $VAR =~ y|n ]];do
-    read -r -p "Proceed? (y/n) " -n 1 VAR
+until [[ ${VAR} =~ y|n ]];do
+    read -r -p "Proceed? (y/n) " VAR
     VAR=$(echo "${VAR}" | tr '[:upper:]' '[:lower:]')
     echo
 done
+[[ ${VAR} != "y" ]] && exit 1
 
 # Delete logs for each run
 for RUN in ${RUNS}; do
